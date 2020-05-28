@@ -1,7 +1,6 @@
 use std::{fs::read_to_string, io::Error, time::Duration};
 
 use serde::Deserialize;
-use toml;
 
 #[derive(Deserialize)]
 pub struct Config {

@@ -1,8 +1,6 @@
 use std::fmt;
 
-use reqwest;
 use serde::{Deserialize, Serialize};
-use serde_json;
 
 const API_BASE_URL: &str = "https://slack.com/api";
 

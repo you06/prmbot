@@ -1,7 +1,6 @@
 use std::{collections::HashSet, convert::From, fmt, time::Duration};
 
 use chrono::{DateTime, Utc};
-use reqwest;
 use serde::{Deserialize, Serialize};
 use serde_json::error::Error as JsonError;
 
@@ -47,7 +46,7 @@ pub struct GitHub {
     token: String,
     client: reqwest::Client,
     deliver_labels: HashSet<String>,
-    deliever_after: Duration,
+    deliver_after: Duration,
 }
 
 struct Header {
@@ -125,7 +124,7 @@ pub struct Comment {
 }
 
 impl GitHub {
-    pub fn new(token: String, deliver_labels: Vec<String>, deliever_after: Duration) -> Self {
+    pub fn new(token: String, deliver_labels: Vec<String>, deliver_after: Duration) -> Self {
         let mut auth_header = "token ".to_owned();
         auth_header.push_str(&token);
         GitHub {
@@ -135,7 +134,7 @@ impl GitHub {
                 .into_iter()
                 .map(|label| label.to_lowercase())
                 .collect(),
-            deliever_after: deliever_after,
+            deliver_after,
         }
     }
 
@@ -178,7 +177,7 @@ impl GitHub {
                     return false;
                 }
                 if now.signed_duration_since(issue.created_at).num_seconds()
-                    < self.deliever_after.as_secs() as i64
+                    < self.deliver_after.as_secs() as i64
                 {
                     return false;
                 }
@@ -293,7 +292,7 @@ mod tests {
                 .into_iter()
                 .map(|name| Label {
                     id: 0,
-                    name: name,
+                    name,
                     description: Some("".to_owned()),
                 })
                 .collect(),
