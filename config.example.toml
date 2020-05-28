@@ -1,0 +1,12 @@
+# slack
+# OAuth access token, user token scopes are required.
+slack-token = "slack-token"
+slack-channel = "slack-channel"
+
+# github
+github-token = "github-token"
+repos = ["you06/prmbot"]
+deliver-labels = [
+  "type/feature-request"
+]
+deliver-after = "12h"
